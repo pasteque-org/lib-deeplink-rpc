@@ -161,7 +161,7 @@ class _DeeplinkRpcResponseReceiver
 
       _logger.info('RPC call handled');
     } on Exception catch (e, stack) {
-      _logger.info('An error occured', e, stack);
+      _logger.info('An error occurred', e, stack);
       throw const DeeplinkRpcResult.failure(
         failure: DeeplinkRpcFailure(code: DeeplinkRpcFailure.kServerError),
       );

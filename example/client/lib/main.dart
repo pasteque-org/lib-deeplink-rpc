@@ -123,7 +123,7 @@ class _SendRequestButton extends StatelessWidget {
             );
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(failure.message ?? 'An error occured'),
+                content: Text(failure.message ?? 'An error occurred'),
               ),
             );
           },

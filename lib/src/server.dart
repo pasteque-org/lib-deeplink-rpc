@@ -78,7 +78,7 @@ class DeeplinkRpcServer
         );
       }
     } on Exception catch (e, stack) {
-      _logger.severe('An error occured', e, stack);
+      _logger.severe('An error occurred', e, stack);
       return const DeeplinkRpcResult.failure(
         failure: DeeplinkRpcFailure(code: DeeplinkRpcFailure.kServerError),
       );
