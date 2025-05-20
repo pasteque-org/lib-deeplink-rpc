@@ -1,4 +1,3 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:convert';
 import 'dart:developer' as dev;
 
@@ -7,16 +6,22 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart';
 
+/// A singleton class to provide a single instance of [DeeplinkRpcClient].
 class DeeplinkRpcClientSingleton {
+  DeeplinkRpcClientSingleton._();
+
   static DeeplinkRpcClient? _client;
 
+  /// Returns the singleton instance of [DeeplinkRpcClient].
+  /// If an instance doesn't exist, it creates one.
   static DeeplinkRpcClient get client {
     return _client ??= DeeplinkRpcClient();
   }
 }
 
+/// Initializes the application, sets up logging, and runs the [MyApp] widget.
 void main() {
-  Logger.root.onRecord.listen((event) {
+  Logger.root.onRecord.listen((final event) {
     dev.log(
       event.message,
       name: event.loggerName,
@@ -32,13 +37,25 @@ void main() {
   runApp(MyApp());
 }
 
+/// The main application widget for the Deeplink RPC client example.
+///
+/// This widget sets up a [MaterialApp.router] with [GoRouter]
+/// to handle navigation, display a button to send an RPC request,
+/// and process incoming deeplink RPC responses.
 class MyApp extends StatelessWidget {
+  /// Creates an instance of [MyApp].
   MyApp({super.key});
 
   final _logger = Logger('Example app');
 
   @override
-  Widget build(BuildContext context) {
+
+  /// Builds the widget tree for the [MyApp].
+  ///
+  /// Returns a [MaterialApp.router] configured with [GoRouter]
+  /// for routing, displaying the main UI with a send request button,
+  /// and handling deeplink responses.
+  Widget build(final BuildContext context) {
     return MaterialApp.router(
       title: 'DeeplinkRPCClient Demo',
       routerConfig: GoRouter(
@@ -47,7 +64,7 @@ class MyApp extends StatelessWidget {
         routes: [
           GoRoute(
             path: '/',
-            builder: (context, state) {
+            builder: (final context, final state) {
               return Scaffold(
                 body: Scaffold(
                   floatingActionButton: _SendRequestButton(logger: _logger),
@@ -64,7 +81,7 @@ class MyApp extends StatelessWidget {
             },
           ),
         ],
-        redirect: (context, state) async {
+        redirect: (final context, final state) {
           DeeplinkRpcClientSingleton.client
               .handleResponse(state.uri.toString());
           return null;
@@ -76,13 +93,13 @@ class MyApp extends StatelessWidget {
 
 class _SendRequestButton extends StatelessWidget {
   const _SendRequestButton({
-    required Logger logger,
+    required final Logger logger,
   }) : _logger = logger;
 
   final Logger _logger;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return FloatingActionButton(
       child: const Icon(Icons.send),
       onPressed: () async {
@@ -99,7 +116,7 @@ class _SendRequestButton extends StatelessWidget {
         );
 
         response.map(
-          failure: (failure) {
+          failure: (final failure) {
             _logger.severe(
               'RPC request failed',
               failure,
@@ -110,7 +127,7 @@ class _SendRequestButton extends StatelessWidget {
               ),
             );
           },
-          success: (result) {
+          success: (final result) {
             _logger.info(
               'RPC request succeed : ${json.encode(result)}',
             );

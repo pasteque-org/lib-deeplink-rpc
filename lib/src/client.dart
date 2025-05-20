@@ -1,4 +1,3 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 import 'dart:ui';
 
@@ -11,26 +10,28 @@ import 'package:logging/logging.dart';
 
 class _RunningRequest {
   _RunningRequest({
-    Duration? timeout,
-    required VoidCallback onTimeout,
+    required final VoidCallback onTimeout,
+    final Duration? timeout,
   }) {
     if (timeout != null) {
-      timer = Timer(
-        timeout,
-        onTimeout,
-      );
+      timer = Timer(timeout, onTimeout);
     }
   }
   final completer = Completer<DeeplinkRpcResponse>();
   late final Timer? timer;
 }
 
+/// A client for sending Deeplink RPC requests and handling responses.
 class DeeplinkRpcClient {
+  /// Creates a [DeeplinkRpcClient].
+  ///
+  /// An optional [urlLauncher] can be provided for custom URL launching behavior.
+  /// An optional [codec] can be provided for custom message encoding/decoding.
   DeeplinkRpcClient({
-    UrlLauncher? urlLauncher,
-    DeeplinkRpcCodec? codec,
-  })  : _codec = codec ?? const DeeplinkRpcCodec(),
-        _urlLauncher = urlLauncher ?? const UrlLauncher() {
+    final UrlLauncher? urlLauncher,
+    final DeeplinkRpcCodec? codec,
+  }) : _codec = codec ?? const DeeplinkRpcCodec(),
+       _urlLauncher = urlLauncher ?? const UrlLauncher() {
     _deeplinkRpcReceiver = _DeeplinkRpcResponseReceiver(codec: _codec);
   }
 
@@ -41,7 +42,7 @@ class DeeplinkRpcClient {
 
   late final _DeeplinkRpcResponseReceiver _deeplinkRpcReceiver;
 
-  void _registerResponseHandler(DeeplinkRpcRequest request) {
+  void _registerResponseHandler(final DeeplinkRpcRequest request) {
     _deeplinkRpcReceiver.registerHandler(
       DeeplinkRpcResponseHandler(
         route: DeeplinkRpcRoute(Uri.parse(request.replyUrl).pathSegments.first),
@@ -50,35 +51,45 @@ class DeeplinkRpcClient {
     );
   }
 
-  void _completeRequest(DeeplinkRpcResponse response) {
+  void _completeRequest(final DeeplinkRpcResponse response) {
     _logger.fine('Request completed $response');
 
-    final runningRequest = _runningRequests[response.id];
+    final runningRequest = _runningRequests[response.nonce];
 
-    if (runningRequest == null) return;
+    if (runningRequest == null) {
+      return;
+    }
 
     runningRequest.completer.complete(response);
 
-    _runningRequests.remove(response.id);
+    _runningRequests.remove(response.nonce);
   }
 
-  bool handleResponse(String? path) {
-    if (!_deeplinkRpcReceiver.canHandle(path)) return false;
+  /// Handles an incoming deeplink response.
+  /// Returns `true` if the response was handled, `false` otherwise.
+  bool handleResponse(final String? path) {
+    if (!_deeplinkRpcReceiver.canHandle(path)) {
+      return false;
+    }
 
     unawaited(_deeplinkRpcReceiver.handle(path));
     return true;
   }
 
+  /// Sends a [DeeplinkRpcRequest] and waits for a response.
+  ///
+  /// Throws a [DeeplinkRpcFailure] if a request with the same ID is already running.
+  /// Returns a [DeeplinkRpcResponse].
   Future<DeeplinkRpcResponse> send({
-    required DeeplinkRpcRequest request,
-    Duration? timeout,
+    required final DeeplinkRpcRequest request,
+    final Duration? timeout,
   }) async {
-    if (_runningRequests.containsKey(request.id)) {
+    if (_runningRequests.containsKey(request.nonce)) {
       return DeeplinkRpcResponse.failure(
-        id: request.id,
+        nonce: request.nonce,
         failure: DeeplinkRpcFailure(
           code: DeeplinkRpcFailure.kInvalidRequest,
-          message: 'A request with id ${request.id} already running.',
+          message: 'A request with id ${request.nonce} already running.',
         ),
       );
     }
@@ -94,7 +105,7 @@ class DeeplinkRpcClient {
       onTimeout: () {
         _completeRequest(
           DeeplinkRpcResponse.failure(
-            id: request.id,
+            nonce: request.nonce,
             failure: const DeeplinkRpcFailure(
               code: DeeplinkRpcFailure.kTimeout,
               message: 'Request timeout.',
@@ -103,35 +114,29 @@ class DeeplinkRpcClient {
         );
       },
     );
-    _runningRequests[request.id] = runningRequest;
+    _runningRequests[request.nonce] = runningRequest;
 
-    await _urlLauncher.launchUrl(
-      url,
-    );
+    await _urlLauncher.launchUrl(url);
 
     return runningRequest.completer.future;
   }
 
-  String _encodeRequest(DeeplinkRpcRequest request) =>
+  String _encodeRequest(final DeeplinkRpcRequest request) =>
       _codec.encode(request.toJson());
 }
 
 /// Receives and decodes DeeplinkRpcRequests.
 class _DeeplinkRpcResponseReceiver
     extends BaseDeeplinkRpcReceiver<DeeplinkRpcResponseHandler> {
-  _DeeplinkRpcResponseReceiver({
-    required this.codec,
-  });
+  _DeeplinkRpcResponseReceiver({required this.codec});
 
   static final _logger = Logger('DeeplinkRpcResponse');
 
   final DeeplinkRpcCodec codec;
 
-  Future<void> handle(String? path) async {
+  Future<void> handle(final String? path) async {
     try {
-      _logger.info(
-        'Handles RPC response',
-      );
+      _logger.info('Handles RPC response');
 
       final handler = handlerForPath(path);
       if (handler == null) {
@@ -154,19 +159,11 @@ class _DeeplinkRpcResponseReceiver
 
       await handler.handle(response);
 
-      _logger.info(
-        'RPC call handled',
-      );
-    } catch (e, stack) {
-      _logger.info(
-        'An error occured',
-        e,
-        stack,
-      );
+      _logger.info('RPC call handled');
+    } on Exception catch (e, stack) {
+      _logger.info('An error occured', e, stack);
       throw const DeeplinkRpcResult.failure(
-        failure: DeeplinkRpcFailure(
-          code: DeeplinkRpcFailure.kServerError,
-        ),
+        failure: DeeplinkRpcFailure(code: DeeplinkRpcFailure.kServerError),
       );
     }
   }

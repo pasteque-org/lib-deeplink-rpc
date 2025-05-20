@@ -1,4 +1,3 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 
 import 'package:deeplink_rpc/src/data/request.dart';
@@ -9,22 +8,27 @@ part 'handler.freezed.dart';
 
 /// Route receiving a Deeplink
 ///
-/// Deeplink path follows the format '/<parametrable_path_prefix>/<base64_payload>'
+/// Deeplink path follows the format `/<parametrable_path_prefix>/<base64_payload>`
 @freezed
-class DeeplinkRpcRoute with _$DeeplinkRpcRoute {
-  const factory DeeplinkRpcRoute(
-    String pathFirstSegment,
-  ) = _DeeplinkRpcRoute;
+abstract class DeeplinkRpcRoute with _$DeeplinkRpcRoute {
+  /// Creates a [DeeplinkRpcRoute].
+  ///
+  /// The [pathFirstSegment] is the first part of the deeplink path used for routing.
+  const factory DeeplinkRpcRoute(final String pathFirstSegment) =
+      _DeeplinkRpcRoute;
   const DeeplinkRpcRoute._();
 
   static RegExp get _pathRegex => RegExp('/.*/(?<data>[a-zA-Z0-9-_=]*)');
 
-  /// Does the path match the Route.
-  bool matches(String path) => _pathRegex.hasMatch(path);
+  /// Checks if the given [path] matches the route structure.
+  bool matches(final String path) => _pathRegex.hasMatch(path);
 
-  /// Extracts data payload from the path.
-  static String? getData(String? path) {
-    if (path == null) return null;
+  /// Extracts the base64 encoded data payload from the given [path].
+  /// Returns `null` if the path is null or if no data can be extracted.
+  static String? getData(final String? path) {
+    if (path == null) {
+      return null;
+    }
 
     final matches = _pathRegex.allMatches(path);
     if (matches.isEmpty) {
@@ -34,29 +38,41 @@ class DeeplinkRpcRoute with _$DeeplinkRpcRoute {
   }
 }
 
+/// Base class for handling Deeplink RPC messages.
 abstract class DeeplinkRpcHandler {
+  /// The route that this handler is responsible for.
   DeeplinkRpcRoute get route;
 }
 
+/// A handler for incoming [DeeplinkRpcRequest] messages.
 @freezed
-class DeeplinkRpcRequestHandler
+abstract class DeeplinkRpcRequestHandler
     with _$DeeplinkRpcRequestHandler
     implements DeeplinkRpcHandler {
+  /// Creates a [DeeplinkRpcRequestHandler].
+  ///
+  /// Requires a [route] to match and a [handle] function to process the request.
   const factory DeeplinkRpcRequestHandler({
-    required DeeplinkRpcRoute route,
-    required FutureOr<Map<String, dynamic>> Function(DeeplinkRpcRequest request)
-        handle,
+    required final DeeplinkRpcRoute route,
+    required final FutureOr<Map<String, dynamic>> Function(
+      DeeplinkRpcRequest request,
+    )
+    handle,
   }) = _DeeplinkRpcRequestHandler;
   const DeeplinkRpcRequestHandler._();
 }
 
+/// A handler for incoming [DeeplinkRpcResponse] messages.
 @freezed
-class DeeplinkRpcResponseHandler
+abstract class DeeplinkRpcResponseHandler
     with _$DeeplinkRpcResponseHandler
     implements DeeplinkRpcHandler {
+  /// Creates a [DeeplinkRpcResponseHandler].
+  ///
+  /// Requires a [route] to match and a [handle] function to process the response.
   const factory DeeplinkRpcResponseHandler({
-    required DeeplinkRpcRoute route,
-    required FutureOr<void> Function(DeeplinkRpcResponse response) handle,
+    required final DeeplinkRpcRoute route,
+    required final FutureOr<void> Function(DeeplinkRpcResponse response) handle,
   }) = _DeeplinkRpcResponseHandler;
   const DeeplinkRpcResponseHandler._();
 }

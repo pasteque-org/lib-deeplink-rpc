@@ -5,24 +5,23 @@ import 'package:test/test.dart';
 
 class BrokenRPCCodec implements DeeplinkRpcCodec {
   @override
-  Map<String, dynamic> decode(String data) => {};
+  Map<String, dynamic> decode(final String data) => {};
 
   @override
-  String encode(_) => 'invalid_data';
+  String encode<T>(final T data) => 'invalid_data';
 }
 
 class MockUrlLauncher implements UrlLauncher {
-  MockUrlLauncher({
-    required Future<bool> Function(Uri url) launchUrl,
-  }) : _launchUrl = launchUrl;
+  MockUrlLauncher({required final Future<bool> Function(Uri url) launchUrl})
+    : _launchUrl = launchUrl;
 
   final Future<bool> Function(Uri url) _launchUrl;
 
   @override
-  Future<bool> canLaunchUrl(Uri url) async => true;
+  Future<bool> canLaunchUrl(final Uri url) async => true;
 
   @override
-  Future<bool> launchUrl(Uri url) async => _launchUrl(url);
+  Future<bool> launchUrl(final Uri url) => _launchUrl(url);
 }
 
 void main() {
@@ -31,11 +30,9 @@ void main() {
   late MockUrlLauncher serverUrlLauncherMock;
   late DeeplinkRpcServer server;
 
-  void _setupClientAndServer({
-    DeeplinkRpcCodec? clientCodec,
-  }) {
+  void setupClientAndServer({final DeeplinkRpcCodec? clientCodec}) {
     clientUrlLauncherMock = MockUrlLauncher(
-      launchUrl: (uri) async {
+      launchUrl: (final uri) async {
         await server.handle(uri.path);
         return true;
       },
@@ -45,24 +42,20 @@ void main() {
       codec: clientCodec,
     );
     serverUrlLauncherMock = MockUrlLauncher(
-      launchUrl: (uri) async {
+      launchUrl: (final uri) async {
         return client.handleResponse(uri.path);
       },
     );
-    server = DeeplinkRpcServer(
-      urlLauncher: serverUrlLauncherMock,
-    );
+    server = DeeplinkRpcServer(urlLauncher: serverUrlLauncherMock);
   }
 
   test('Client should receive a success response when call is valid', () async {
-    _setupClientAndServer();
+    setupClientAndServer();
     server.registerHandler(
       DeeplinkRpcRequestHandler(
         route: const DeeplinkRpcRoute('request_endpoint'),
-        handle: (request) => {
-          'responseString': 'aString',
-          'responseInt': 4,
-        },
+        handle:
+            (final request) => {'responseString': 'aString', 'responseInt': 4},
       ),
     );
 
@@ -70,102 +63,89 @@ void main() {
       request: DeeplinkRpcRequest(
         requestUrl: 'serverapp://server.app/request_endpoint',
         replyUrl: 'clientapp://client.app/reply_endpoint',
-        params: {
-          'clientProp1': 'value1',
-          'clientProp2': 2,
-        },
+        params: {'clientProp1': 'value1', 'clientProp2': 2},
       ),
     );
-    expect(
-      response.result,
-      {
-        'responseString': 'aString',
-        'responseInt': 4,
-      },
-    );
+    expect(response.result, {'responseString': 'aString', 'responseInt': 4});
   });
 
   test(
-      'Client should receive a timeout failure when call is longer than expected',
-      () async {
-    _setupClientAndServer();
+    'Client should receive a timeout failure when call is longer than expected',
+    () async {
+      setupClientAndServer();
 
-    server.registerHandler(
-      DeeplinkRpcRequestHandler(
-        route: const DeeplinkRpcRoute('request_endpoint'),
-        handle: (request) async {
-          await Future.delayed(const Duration(milliseconds: 1));
-          return {};
-        },
-      ),
-    );
+      server.registerHandler(
+        DeeplinkRpcRequestHandler(
+          route: const DeeplinkRpcRoute('request_endpoint'),
+          handle: (final request) async {
+            await Future.delayed(const Duration(milliseconds: 1));
+            return {};
+          },
+        ),
+      );
 
-    final response = await client.send(
-      timeout: const Duration(microseconds: 1),
-      request: DeeplinkRpcRequest(
-        requestUrl: 'serverapp://server.app/request_endpoint',
-        replyUrl: 'clientapp://client.app/reply_endpoint',
-        params: {},
-      ),
-    );
-    expect(
-      response.failure,
-      const DeeplinkRpcFailure(
-        code: DeeplinkRpcFailure.kTimeout,
-        message: 'Request timeout.',
-      ),
-    );
-  });
+      final response = await client.send(
+        timeout: const Duration(microseconds: 1),
+        request: DeeplinkRpcRequest(
+          requestUrl: 'serverapp://server.app/request_endpoint',
+          replyUrl: 'clientapp://client.app/reply_endpoint',
+          params: {},
+        ),
+      );
+      expect(
+        response.failure,
+        const DeeplinkRpcFailure(
+          code: DeeplinkRpcFailure.kTimeout,
+          message: 'Request timeout.',
+        ),
+      );
+    },
+  );
 
   test(
-      "Client should not receive response when call format is invalid (because the server doesn't know at which URL to send the response)",
-      () async {
-    _setupClientAndServer(
-      clientCodec: BrokenRPCCodec(),
-    );
+    "Client should not receive response when call format is invalid (because the server doesn't know at which URL to send the response)",
+    () async {
+      setupClientAndServer(clientCodec: BrokenRPCCodec());
 
-    server.registerHandler(
-      DeeplinkRpcRequestHandler(
-        route: const DeeplinkRpcRoute('request_endpoint'),
-        handle: (request) async => {},
-      ),
-    );
+      server.registerHandler(
+        DeeplinkRpcRequestHandler(
+          route: const DeeplinkRpcRoute('request_endpoint'),
+          handle: (final request) => {},
+        ),
+      );
 
-    final response = await client.send(
-      timeout: const Duration(milliseconds: 1),
-      request: DeeplinkRpcRequest(
-        requestUrl: 'serverapp://server.app/request_endpoint',
-        replyUrl: 'clientapp://client.app/reply_endpoint',
-        params: {},
-      ),
-    );
-    expect(
-      response.failure,
-      const DeeplinkRpcFailure(
-        code: DeeplinkRpcFailure.kTimeout,
-        message: 'Request timeout.',
-      ),
-    );
-  });
+      final response = await client.send(
+        timeout: const Duration(milliseconds: 1),
+        request: DeeplinkRpcRequest(
+          requestUrl: 'serverapp://server.app/request_endpoint',
+          replyUrl: 'clientapp://client.app/reply_endpoint',
+          params: {},
+        ),
+      );
+      expect(
+        response.failure,
+        const DeeplinkRpcFailure(
+          code: DeeplinkRpcFailure.kTimeout,
+          message: 'Request timeout.',
+        ),
+      );
+    },
+  );
 
-  test('Client should receive a failure when server endpoint does not exist',
-      () async {
-    _setupClientAndServer();
+  test(
+    'Client should receive a failure when server endpoint does not exist',
+    () async {
+      setupClientAndServer();
 
-    final response = await client.send(
-      request: DeeplinkRpcRequest(
-        requestUrl: 'serverapp://server.app/unknown_endpoint',
-        replyUrl: 'clientapp://client.app/reply_endpoint',
-        params: {},
-      ),
-    );
-    expect(
-      response.failure,
-      isNotNull,
-    );
-    expect(
-      response.failure?.code,
-      DeeplinkRpcFailure.kInvalidRequest,
-    );
-  });
+      final response = await client.send(
+        request: DeeplinkRpcRequest(
+          requestUrl: 'serverapp://server.app/unknown_endpoint',
+          replyUrl: 'clientapp://client.app/reply_endpoint',
+          params: {},
+        ),
+      );
+      expect(response.failure, isNotNull);
+      expect(response.failure?.code, DeeplinkRpcFailure.kInvalidRequest);
+    },
+  );
 }
