@@ -1,5 +1,5 @@
 # 3.0.0
-- Forked [archethic](https://github.com/archethic-foundation/libdart.git)
+- Forked [archethic](https://github.com/pasteque-org/lib-deeplink-rpc.git)
 - **Flutter SDK migration**: Updated the Flutter version to `3.29.3` to ensure compatibility with the latest stable tooling and features.
 - **Dartdoc documentation**: Added documentation comments throughout the codebase to improve API documentation via [`dartdoc`](https://dart.dev/tools/dartdoc).
 - **Linter configuration**: Enabled and applied a comprehensive set of linter rules based on the official list ([dart.dev/tools/linter-rules/all](https://dart.dev/tools/linter-rules/all)), including adjustments to comply with newly introduced rules.
