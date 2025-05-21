@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,70 +10,43 @@ part of 'result.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$DeeplinkRpcResult {
-  DeeplinkRpcRequest? get request => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(
-            DeeplinkRpcRequest? request, DeeplinkRpcFailure failure)
-        failure,
-    required TResult Function(DeeplinkRpcRequest request, dynamic result)
-        success,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(DeeplinkRpcRequest? request, DeeplinkRpcFailure failure)?
-        failure,
-    TResult? Function(DeeplinkRpcRequest request, dynamic result)? success,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(DeeplinkRpcRequest? request, DeeplinkRpcFailure failure)?
-        failure,
-    TResult Function(DeeplinkRpcRequest request, dynamic result)? success,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_DeeplinkRpcResultFailure value) failure,
-    required TResult Function(_DeeplinkRpcResultSuccess value) success,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_DeeplinkRpcResultFailure value)? failure,
-    TResult? Function(_DeeplinkRpcResultSuccess value)? success,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_DeeplinkRpcResultFailure value)? failure,
-    TResult Function(_DeeplinkRpcResultSuccess value)? success,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+  DeeplinkRpcRequest? get request;
 
   /// Create a copy of DeeplinkRpcResult
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $DeeplinkRpcResultCopyWith<DeeplinkRpcResult> get copyWith =>
-      throw _privateConstructorUsedError;
+      _$DeeplinkRpcResultCopyWithImpl<DeeplinkRpcResult>(
+          this as DeeplinkRpcResult, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is DeeplinkRpcResult &&
+            (identical(other.request, request) || other.request == request));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, request);
+
+  @override
+  String toString() {
+    return 'DeeplinkRpcResult(request: $request)';
+  }
 }
 
 /// @nodoc
-abstract class $DeeplinkRpcResultCopyWith<$Res> {
+abstract mixin class $DeeplinkRpcResultCopyWith<$Res> {
   factory $DeeplinkRpcResultCopyWith(
-          DeeplinkRpcResult value, $Res Function(DeeplinkRpcResult) then) =
-      _$DeeplinkRpcResultCopyWithImpl<$Res, DeeplinkRpcResult>;
+          DeeplinkRpcResult value, $Res Function(DeeplinkRpcResult) _then) =
+      _$DeeplinkRpcResultCopyWithImpl;
   @useResult
   $Res call({DeeplinkRpcRequest request});
 
@@ -80,14 +54,12 @@ abstract class $DeeplinkRpcResultCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$DeeplinkRpcResultCopyWithImpl<$Res, $Val extends DeeplinkRpcResult>
+class _$DeeplinkRpcResultCopyWithImpl<$Res>
     implements $DeeplinkRpcResultCopyWith<$Res> {
-  _$DeeplinkRpcResultCopyWithImpl(this._value, this._then);
+  _$DeeplinkRpcResultCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final DeeplinkRpcResult _self;
+  final $Res Function(DeeplinkRpcResult) _then;
 
   /// Create a copy of DeeplinkRpcResult
   /// with the given fields replaced by the non-null parameter values.
@@ -96,12 +68,12 @@ class _$DeeplinkRpcResultCopyWithImpl<$Res, $Val extends DeeplinkRpcResult>
   $Res call({
     Object? request = null,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       request: null == request
-          ? _value.request!
+          ? _self.request!
           : request // ignore: cast_nullable_to_non_nullable
               as DeeplinkRpcRequest,
-    ) as $Val);
+    ));
   }
 
   /// Create a copy of DeeplinkRpcResult
@@ -109,59 +81,93 @@ class _$DeeplinkRpcResultCopyWithImpl<$Res, $Val extends DeeplinkRpcResult>
   @override
   @pragma('vm:prefer-inline')
   $DeeplinkRpcRequestCopyWith<$Res>? get request {
-    if (_value.request == null) {
+    if (_self.request == null) {
       return null;
     }
 
-    return $DeeplinkRpcRequestCopyWith<$Res>(_value.request!, (value) {
-      return _then(_value.copyWith(request: value) as $Val);
+    return $DeeplinkRpcRequestCopyWith<$Res>(_self.request!, (value) {
+      return _then(_self.copyWith(request: value));
     });
   }
 }
 
 /// @nodoc
-abstract class _$$DeeplinkRpcResultFailureImplCopyWith<$Res>
-    implements $DeeplinkRpcResultCopyWith<$Res> {
-  factory _$$DeeplinkRpcResultFailureImplCopyWith(
-          _$DeeplinkRpcResultFailureImpl value,
-          $Res Function(_$DeeplinkRpcResultFailureImpl) then) =
-      __$$DeeplinkRpcResultFailureImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({DeeplinkRpcRequest? request, DeeplinkRpcFailure failure});
 
-  @override
-  $DeeplinkRpcRequestCopyWith<$Res>? get request;
-  $DeeplinkRpcFailureCopyWith<$Res> get failure;
-}
+class _DeeplinkRpcResultFailure extends DeeplinkRpcResult {
+  const _DeeplinkRpcResultFailure({required this.failure, this.request})
+      : super._();
 
-/// @nodoc
-class __$$DeeplinkRpcResultFailureImplCopyWithImpl<$Res>
-    extends _$DeeplinkRpcResultCopyWithImpl<$Res,
-        _$DeeplinkRpcResultFailureImpl>
-    implements _$$DeeplinkRpcResultFailureImplCopyWith<$Res> {
-  __$$DeeplinkRpcResultFailureImplCopyWithImpl(
-      _$DeeplinkRpcResultFailureImpl _value,
-      $Res Function(_$DeeplinkRpcResultFailureImpl) _then)
-      : super(_value, _then);
+  final DeeplinkRpcFailure failure;
+  @override
+  final DeeplinkRpcRequest? request;
 
   /// Create a copy of DeeplinkRpcResult
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$DeeplinkRpcResultFailureCopyWith<_DeeplinkRpcResultFailure> get copyWith =>
+      __$DeeplinkRpcResultFailureCopyWithImpl<_DeeplinkRpcResultFailure>(
+          this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _DeeplinkRpcResultFailure &&
+            (identical(other.failure, failure) || other.failure == failure) &&
+            (identical(other.request, request) || other.request == request));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, failure, request);
+
+  @override
+  String toString() {
+    return 'DeeplinkRpcResult.failure(failure: $failure, request: $request)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$DeeplinkRpcResultFailureCopyWith<$Res>
+    implements $DeeplinkRpcResultCopyWith<$Res> {
+  factory _$DeeplinkRpcResultFailureCopyWith(_DeeplinkRpcResultFailure value,
+          $Res Function(_DeeplinkRpcResultFailure) _then) =
+      __$DeeplinkRpcResultFailureCopyWithImpl;
+  @override
+  @useResult
+  $Res call({DeeplinkRpcFailure failure, DeeplinkRpcRequest? request});
+
+  $DeeplinkRpcFailureCopyWith<$Res> get failure;
+  @override
+  $DeeplinkRpcRequestCopyWith<$Res>? get request;
+}
+
+/// @nodoc
+class __$DeeplinkRpcResultFailureCopyWithImpl<$Res>
+    implements _$DeeplinkRpcResultFailureCopyWith<$Res> {
+  __$DeeplinkRpcResultFailureCopyWithImpl(this._self, this._then);
+
+  final _DeeplinkRpcResultFailure _self;
+  final $Res Function(_DeeplinkRpcResultFailure) _then;
+
+  /// Create a copy of DeeplinkRpcResult
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
   $Res call({
-    Object? request = freezed,
     Object? failure = null,
+    Object? request = freezed,
   }) {
-    return _then(_$DeeplinkRpcResultFailureImpl(
-      request: freezed == request
-          ? _value.request
-          : request // ignore: cast_nullable_to_non_nullable
-              as DeeplinkRpcRequest?,
+    return _then(_DeeplinkRpcResultFailure(
       failure: null == failure
-          ? _value.failure
+          ? _self.failure
           : failure // ignore: cast_nullable_to_non_nullable
               as DeeplinkRpcFailure,
+      request: freezed == request
+          ? _self.request
+          : request // ignore: cast_nullable_to_non_nullable
+              as DeeplinkRpcRequest?,
     ));
   }
 
@@ -170,143 +176,70 @@ class __$$DeeplinkRpcResultFailureImplCopyWithImpl<$Res>
   @override
   @pragma('vm:prefer-inline')
   $DeeplinkRpcFailureCopyWith<$Res> get failure {
-    return $DeeplinkRpcFailureCopyWith<$Res>(_value.failure, (value) {
-      return _then(_value.copyWith(failure: value));
+    return $DeeplinkRpcFailureCopyWith<$Res>(_self.failure, (value) {
+      return _then(_self.copyWith(failure: value));
+    });
+  }
+
+  /// Create a copy of DeeplinkRpcResult
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $DeeplinkRpcRequestCopyWith<$Res>? get request {
+    if (_self.request == null) {
+      return null;
+    }
+
+    return $DeeplinkRpcRequestCopyWith<$Res>(_self.request!, (value) {
+      return _then(_self.copyWith(request: value));
     });
   }
 }
 
 /// @nodoc
 
-class _$DeeplinkRpcResultFailureImpl extends _DeeplinkRpcResultFailure {
-  const _$DeeplinkRpcResultFailureImpl({this.request, required this.failure})
+class _DeeplinkRpcResultSuccess extends DeeplinkRpcResult {
+  const _DeeplinkRpcResultSuccess({required this.request, this.result})
       : super._();
 
   @override
-  final DeeplinkRpcRequest? request;
-  @override
-  final DeeplinkRpcFailure failure;
+  final DeeplinkRpcRequest request;
+  final dynamic result;
 
+  /// Create a copy of DeeplinkRpcResult
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'DeeplinkRpcResult.failure(request: $request, failure: $failure)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$DeeplinkRpcResultSuccessCopyWith<_DeeplinkRpcResultSuccess> get copyWith =>
+      __$DeeplinkRpcResultSuccessCopyWithImpl<_DeeplinkRpcResultSuccess>(
+          this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$DeeplinkRpcResultFailureImpl &&
+            other is _DeeplinkRpcResultSuccess &&
             (identical(other.request, request) || other.request == request) &&
-            (identical(other.failure, failure) || other.failure == failure));
+            const DeepCollectionEquality().equals(other.result, result));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, request, failure);
-
-  /// Create a copy of DeeplinkRpcResult
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$DeeplinkRpcResultFailureImplCopyWith<_$DeeplinkRpcResultFailureImpl>
-      get copyWith => __$$DeeplinkRpcResultFailureImplCopyWithImpl<
-          _$DeeplinkRpcResultFailureImpl>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType, request, const DeepCollectionEquality().hash(result));
 
   @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(
-            DeeplinkRpcRequest? request, DeeplinkRpcFailure failure)
-        failure,
-    required TResult Function(DeeplinkRpcRequest request, dynamic result)
-        success,
-  }) {
-    return failure(request, this.failure);
+  String toString() {
+    return 'DeeplinkRpcResult.success(request: $request, result: $result)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(DeeplinkRpcRequest? request, DeeplinkRpcFailure failure)?
-        failure,
-    TResult? Function(DeeplinkRpcRequest request, dynamic result)? success,
-  }) {
-    return failure?.call(request, this.failure);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(DeeplinkRpcRequest? request, DeeplinkRpcFailure failure)?
-        failure,
-    TResult Function(DeeplinkRpcRequest request, dynamic result)? success,
-    required TResult orElse(),
-  }) {
-    if (failure != null) {
-      return failure(request, this.failure);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_DeeplinkRpcResultFailure value) failure,
-    required TResult Function(_DeeplinkRpcResultSuccess value) success,
-  }) {
-    return failure(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_DeeplinkRpcResultFailure value)? failure,
-    TResult? Function(_DeeplinkRpcResultSuccess value)? success,
-  }) {
-    return failure?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_DeeplinkRpcResultFailure value)? failure,
-    TResult Function(_DeeplinkRpcResultSuccess value)? success,
-    required TResult orElse(),
-  }) {
-    if (failure != null) {
-      return failure(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _DeeplinkRpcResultFailure extends DeeplinkRpcResult {
-  const factory _DeeplinkRpcResultFailure(
-          {final DeeplinkRpcRequest? request,
-          required final DeeplinkRpcFailure failure}) =
-      _$DeeplinkRpcResultFailureImpl;
-  const _DeeplinkRpcResultFailure._() : super._();
-
-  @override
-  DeeplinkRpcRequest? get request;
-  DeeplinkRpcFailure get failure;
-
-  /// Create a copy of DeeplinkRpcResult
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$DeeplinkRpcResultFailureImplCopyWith<_$DeeplinkRpcResultFailureImpl>
-      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$DeeplinkRpcResultSuccessImplCopyWith<$Res>
+abstract mixin class _$DeeplinkRpcResultSuccessCopyWith<$Res>
     implements $DeeplinkRpcResultCopyWith<$Res> {
-  factory _$$DeeplinkRpcResultSuccessImplCopyWith(
-          _$DeeplinkRpcResultSuccessImpl value,
-          $Res Function(_$DeeplinkRpcResultSuccessImpl) then) =
-      __$$DeeplinkRpcResultSuccessImplCopyWithImpl<$Res>;
+  factory _$DeeplinkRpcResultSuccessCopyWith(_DeeplinkRpcResultSuccess value,
+          $Res Function(_DeeplinkRpcResultSuccess) _then) =
+      __$DeeplinkRpcResultSuccessCopyWithImpl;
   @override
   @useResult
   $Res call({DeeplinkRpcRequest request, dynamic result});
@@ -316,30 +249,28 @@ abstract class _$$DeeplinkRpcResultSuccessImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$DeeplinkRpcResultSuccessImplCopyWithImpl<$Res>
-    extends _$DeeplinkRpcResultCopyWithImpl<$Res,
-        _$DeeplinkRpcResultSuccessImpl>
-    implements _$$DeeplinkRpcResultSuccessImplCopyWith<$Res> {
-  __$$DeeplinkRpcResultSuccessImplCopyWithImpl(
-      _$DeeplinkRpcResultSuccessImpl _value,
-      $Res Function(_$DeeplinkRpcResultSuccessImpl) _then)
-      : super(_value, _then);
+class __$DeeplinkRpcResultSuccessCopyWithImpl<$Res>
+    implements _$DeeplinkRpcResultSuccessCopyWith<$Res> {
+  __$DeeplinkRpcResultSuccessCopyWithImpl(this._self, this._then);
+
+  final _DeeplinkRpcResultSuccess _self;
+  final $Res Function(_DeeplinkRpcResultSuccess) _then;
 
   /// Create a copy of DeeplinkRpcResult
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? request = null,
     Object? result = freezed,
   }) {
-    return _then(_$DeeplinkRpcResultSuccessImpl(
+    return _then(_DeeplinkRpcResultSuccess(
       request: null == request
-          ? _value.request
+          ? _self.request
           : request // ignore: cast_nullable_to_non_nullable
               as DeeplinkRpcRequest,
       result: freezed == result
-          ? _value.result
+          ? _self.result
           : result // ignore: cast_nullable_to_non_nullable
               as dynamic,
     ));
@@ -350,132 +281,10 @@ class __$$DeeplinkRpcResultSuccessImplCopyWithImpl<$Res>
   @override
   @pragma('vm:prefer-inline')
   $DeeplinkRpcRequestCopyWith<$Res> get request {
-    return $DeeplinkRpcRequestCopyWith<$Res>(_value.request, (value) {
-      return _then(_value.copyWith(request: value));
+    return $DeeplinkRpcRequestCopyWith<$Res>(_self.request, (value) {
+      return _then(_self.copyWith(request: value));
     });
   }
 }
 
-/// @nodoc
-
-class _$DeeplinkRpcResultSuccessImpl extends _DeeplinkRpcResultSuccess {
-  const _$DeeplinkRpcResultSuccessImpl({required this.request, this.result})
-      : super._();
-
-  @override
-  final DeeplinkRpcRequest request;
-  @override
-  final dynamic result;
-
-  @override
-  String toString() {
-    return 'DeeplinkRpcResult.success(request: $request, result: $result)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$DeeplinkRpcResultSuccessImpl &&
-            (identical(other.request, request) || other.request == request) &&
-            const DeepCollectionEquality().equals(other.result, result));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, request, const DeepCollectionEquality().hash(result));
-
-  /// Create a copy of DeeplinkRpcResult
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$DeeplinkRpcResultSuccessImplCopyWith<_$DeeplinkRpcResultSuccessImpl>
-      get copyWith => __$$DeeplinkRpcResultSuccessImplCopyWithImpl<
-          _$DeeplinkRpcResultSuccessImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(
-            DeeplinkRpcRequest? request, DeeplinkRpcFailure failure)
-        failure,
-    required TResult Function(DeeplinkRpcRequest request, dynamic result)
-        success,
-  }) {
-    return success(request, result);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(DeeplinkRpcRequest? request, DeeplinkRpcFailure failure)?
-        failure,
-    TResult? Function(DeeplinkRpcRequest request, dynamic result)? success,
-  }) {
-    return success?.call(request, result);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(DeeplinkRpcRequest? request, DeeplinkRpcFailure failure)?
-        failure,
-    TResult Function(DeeplinkRpcRequest request, dynamic result)? success,
-    required TResult orElse(),
-  }) {
-    if (success != null) {
-      return success(request, result);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_DeeplinkRpcResultFailure value) failure,
-    required TResult Function(_DeeplinkRpcResultSuccess value) success,
-  }) {
-    return success(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_DeeplinkRpcResultFailure value)? failure,
-    TResult? Function(_DeeplinkRpcResultSuccess value)? success,
-  }) {
-    return success?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_DeeplinkRpcResultFailure value)? failure,
-    TResult Function(_DeeplinkRpcResultSuccess value)? success,
-    required TResult orElse(),
-  }) {
-    if (success != null) {
-      return success(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _DeeplinkRpcResultSuccess extends DeeplinkRpcResult {
-  const factory _DeeplinkRpcResultSuccess(
-      {required final DeeplinkRpcRequest request,
-      final dynamic result}) = _$DeeplinkRpcResultSuccessImpl;
-  const _DeeplinkRpcResultSuccess._() : super._();
-
-  @override
-  DeeplinkRpcRequest get request;
-  dynamic get result;
-
-  /// Create a copy of DeeplinkRpcResult
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$DeeplinkRpcResultSuccessImplCopyWith<_$DeeplinkRpcResultSuccessImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
+// dart format on

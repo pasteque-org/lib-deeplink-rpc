@@ -1,7 +1,15 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
+/// Provides utility extension methods for [String].
 extension PowerString on String {
-  String strip(String whatToStrip) {
-    var startIndex = 0, endIndex = length - 1;
+  /// Removes leading and trailing characters specified in [whatToStrip] from this string.
+  ///
+  /// Example:
+  /// ```dart
+  /// 'xxHello Worldxx'.strip('x'); // Output: 'Hello World'
+  /// '..##TestData##..'.strip('.#'); // Output: 'TestData'
+  /// ```
+  String strip(final String whatToStrip) {
+    var startIndex = 0;
+    var endIndex = length - 1;
 
     for (var i = 0; i <= length; i++) {
       if (i == length) {

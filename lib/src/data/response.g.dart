@@ -8,7 +8,7 @@ part of 'response.dart';
 
 DeeplinkRpcResponse _$DeeplinkRpcResponseFromJson(Map<String, dynamic> json) =>
     DeeplinkRpcResponse(
-      id: json['id'] as String,
+      nonce: json['nonce'] as String,
       failure: json['failure'] == null
           ? null
           : DeeplinkRpcFailure.fromJson(
@@ -19,7 +19,7 @@ DeeplinkRpcResponse _$DeeplinkRpcResponseFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$DeeplinkRpcResponseToJson(
         DeeplinkRpcResponse instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'nonce': instance.nonce,
       if (instance.failure case final value?) 'failure': value,
       if (instance.result case final value?) 'result': value,
     };

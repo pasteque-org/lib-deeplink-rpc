@@ -1,71 +1,66 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deeplink_rpc/src/data/failure.dart';
-import 'package:deeplink_rpc/src/data/result.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'response.g.dart';
 
-/// RPC request result to send back through Deeplink.
+/// Represents an RPC response to be sent back via a deeplink.
+///
+/// It contains the original request [nonce] and either a [result] on success
+/// or a [failure] object on error. A response cannot have both.
 @JsonSerializable(includeIfNull: false)
 class DeeplinkRpcResponse {
-  const DeeplinkRpcResponse({
-    required this.id,
-    this.failure,
-    this.result,
-  }) : assert(
-          failure == null || result == null,
-          'A response cannot be both success and failure.',
-        );
+  /// Creates a [DeeplinkRpcResponse].
+  ///
+  /// Requires the original request [nonce].
+  /// Exactly one of [failure] or [result] must be provided.
+  const DeeplinkRpcResponse({required this.nonce, this.failure, this.result})
+    : assert(
+        failure == null || result == null,
+        'A response cannot be both success and failure.',
+      );
 
-  factory DeeplinkRpcResponse.fromJson(Map<String, dynamic> json) =>
+  /// Creates a [DeeplinkRpcResponse] instance from a JSON map.
+  factory DeeplinkRpcResponse.fromJson(final Map<String, dynamic> json) =>
       _$DeeplinkRpcResponseFromJson(json);
 
+  /// Creates a success [DeeplinkRpcResponse].
+  ///
+  /// Requires the original request [nonce] and the [result] payload.
   factory DeeplinkRpcResponse.success({
-    required String id,
-    dynamic result,
-  }) =>
-      DeeplinkRpcResponse(
-        id: id,
-        result: result,
-      );
+    required final String nonce,
+    final result,
+  }) => DeeplinkRpcResponse(nonce: nonce, result: result);
 
+  /// Creates a failure [DeeplinkRpcResponse].
+  ///
+  /// Requires the original request [nonce] and the [failure] details.
   factory DeeplinkRpcResponse.failure({
-    required String id,
-    required DeeplinkRpcFailure failure,
-  }) =>
-      DeeplinkRpcResponse(
-        id: id,
-        failure: failure,
-      );
+    required final String nonce,
+    required final DeeplinkRpcFailure failure,
+  }) => DeeplinkRpcResponse(nonce: nonce, failure: failure);
 
-  final String id;
+  /// The unique identifier of the original request.
+  final String nonce;
+
+  /// The failure details if the request was unsuccessful. `null` for a successful response.
   final DeeplinkRpcFailure? failure;
+
+  /// The result payload if the request was successful. `null` for a failed response.
   final dynamic result;
 
+  /// Allows to process the response by providing separate handlers for [failure] and [success] cases.
+  ///
+  /// Returns the result of the executed handler.
   T map<T>({
-    required T Function(DeeplinkRpcFailure failure) failure,
-    required T Function(dynamic result) success,
+    required final T Function(DeeplinkRpcFailure failure) failure,
+    required final T Function(T result) success,
   }) {
-    if (this.failure != null) return failure(this.failure!);
+    if (this.failure != null) {
+      return failure(this.failure!);
+    }
     return success(result);
   }
 
+  /// Converts this [DeeplinkRpcResponse] instance to a JSON map.
   Map<String, dynamic> toJson() => _$DeeplinkRpcResponseToJson(this);
-}
-
-extension DeeplinkRpcResultExt on DeeplinkRpcResult {
-  DeeplinkRpcResponse? toResponse() => map(
-        failure: (failure) {
-          final request = failure.request;
-          if (request == null) return null;
-          return DeeplinkRpcResponse.failure(
-            id: request.id,
-            failure: failure.failure,
-          );
-        },
-        success: (success) => DeeplinkRpcResponse.success(
-          id: success.request.id,
-          result: success.result,
-        ),
-      );
 }

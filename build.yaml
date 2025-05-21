@@ -1,0 +1,16 @@
+targets:
+  $default:
+    sources:
+      - $package$
+      - lib/**
+      - test/**
+      - example/**
+    builders:
+      json_serializable:
+        generate_for:
+          - lib/**
+      freezed:
+        generate_for:
+          - lib/**
+
+  
